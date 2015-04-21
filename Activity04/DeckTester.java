@@ -24,7 +24,7 @@ public class DeckTester {
         System.out.println("  size: " + d.size());
         System.out.println();
         System.out.println();
-
+        /*
         System.out.println("**** Deal a Card ****");
         System.out.println("  deal: " + d.deal());
         System.out.println();

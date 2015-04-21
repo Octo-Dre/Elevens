@@ -2,6 +2,8 @@ package Activity04;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.io.*;
+import java.util.Scanner;
 
 /**
  * The Deck class represents a shuffled deck of cards.
@@ -85,6 +87,25 @@ public class Deck {
         size--;
         Card c = cards.get(size);
         return c;
+    }
+    
+    /**
+     * Does something
+     */
+    public boolean arePermutations(Deck otherDeck){
+        String deckString = this.toString();
+        String[] array1 = new String[size];
+        String otherDeckString = otherDeck.toString();
+        String[] array2 = new String[otherDeck.size()];
+        Scanner darkly = new Scanner(deckString);
+        darkly.useDelimiter(", ");
+        String bullshit = "size = " + size + "\nUndealt cards: \n";
+        String firstString = darkly.next();
+        array1[0] = firstString.substring(bullshit.length(), firstString.length());
+        for(int i = 1; darkly.hasNext(); i++){
+            array1[i] = darkly.next();
+        }
+        return true;
     }
 
     /**
