@@ -90,24 +90,30 @@ public class Deck {
     }
     
     /**
-     * Does something
+     * Compares this deck to another to see if they 
+     * are permutations
+     * @param otherDeck deck to be compared
+     * @return true if the decks are permutations, false otherwise
      */
     public boolean arePermutations(Deck otherDeck){
-        String deckString = this.toString();
-        String[] array1 = new String[size];
-        String otherDeckString = otherDeck.toString();
-        String[] array2 = new String[otherDeck.size()];
-        Scanner darkly = new Scanner(deckString);
-        darkly.useDelimiter(", ");
-        String bullshit = "size = " + size + "\nUndealt cards: \n";
-        String firstString = darkly.next();
-        array1[0] = firstString.substring(bullshit.length(), firstString.length());
-        for(int i = 1; darkly.hasNext(); i++){
-            array1[i] = darkly.next();
+        if(size() != otherDeck.size())
+            return false;
+        int matchCount = 0;
+        for(Card c : cards){
+            while(otherDeck.size() != 0){
+                if(c.matches(otherDeck.deal())){
+                    matchCount++;
+                    break;
+                }
+            }
+            otherDeck.shuffle();
         }
-        return true;
+        if(matchCount == size)
+            return true;
+        else
+            return false;
     }
-
+    
     /**
      * Generates and returns a string representation of this deck.
      * @return a string representation of this deck.

@@ -17,6 +17,7 @@ public class DeckTester {
         String[] suits = {"blue", "red"};
         int[] pointValues = {11, 12, 13};
         Deck d = new Deck(ranks, suits, pointValues);
+        Deck e = new Deck(ranks, suits, pointValues);
 
         System.out.println("**** Original Deck Methods ****");
         System.out.println("  toString:\n" + d.toString());
@@ -24,7 +25,20 @@ public class DeckTester {
         System.out.println("  size: " + d.size());
         System.out.println();
         System.out.println();
-        /*
+        
+        System.out.println("**** Test Shuffle ****");
+        d.shuffle();
+        System.out.println("The deck was shuffled correctly: " + d.arePermutations(e));
+        System.out.println();
+        System.out.println();
+        
+        System.out.println("**** Deck Methods After Shuffle ****");
+        System.out.println("  toString:\n" + d.toString());
+        System.out.println("  isEmpty: " + d.isEmpty());
+        System.out.println("  size: " + d.size());
+        System.out.println();
+        System.out.println();
+        
         System.out.println("**** Deal a Card ****");
         System.out.println("  deal: " + d.deal());
         System.out.println();
@@ -55,34 +69,5 @@ public class DeckTester {
         System.out.println("  deal: " + d.deal());
         System.out.println();
         System.out.println();
-
-        /* *** TO BE COMPLETED IN ACTIVITY 4 *** */
     }
-    
-    /**
-     * Compares two ArrayLists to see if they are permutations of each other
-     * @param a
-     * @param b
-     * @return a boolean to indicate whether a and b are permutations
-     */
-    /*public boolean arePermutations(Deck a, Deck b){
-        if(a.size() != b.size())
-            return false;
-        else{
-            for(Card aCard : a){
-                for(Card bCard : b){
-                    if(aCard.matches(bCard)){
-                        a.remove(aCard);
-                        b.remove(bCard);
-                        break;
-                    }
-                }
-            }
-            if(a.size() == 0 && b.size() == 0)
-                return true;
-            else
-                return false;
-        }
-    }*/
-    
 }
