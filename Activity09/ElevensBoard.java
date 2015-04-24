@@ -36,13 +36,12 @@ public class ElevensBoard extends Board {
      */
     private static final boolean I_AM_DEBUGGING = false;
 
-
     /**
      * Creates a new <code>ElevensBoard</code> instance.
      */
-     public ElevensBoard() {
+    public ElevensBoard() {
         super(BOARD_SIZE, RANKS, SUITS, POINT_VALUES);
-     }
+    }
 
     /**
      * Determines if the selected cards form a valid group for removal.
@@ -61,30 +60,15 @@ public class ElevensBoard extends Board {
         List<Card> cardList = new ArrayList();
         if(selectedCards.size() == 2){
             if(cardAt(selectedCards.get(0)).pointValue() 
-                    + cardAt(selectedCards.get(1)).pointValue() == 11)
+            + cardAt(selectedCards.get(1)).pointValue() == 11)
                 return true;
             else
                 return false;
         }
-        else if(selectedCards.size() == 3){
-            for(Integer i : selectedCards){
-                cardList.add(cardAt(i));
-            }
-            for(Card c : cardList){
-                if(c.rank().equals("king"))
-                    king = true;
-                else if(c.rank().equals("queen"))
-                    queen = true;
-                else if(c.rank().equals("jack"))
-                    jack = true;
-            }
-            if(king && queen && jack)
-                return true;
-            else
-                return false;
+        else if(selectedCards.size() == 3 && faceCardTest(selectedCards)){
+            return true;
         }
-        else
-            return false;
+        return false;
     }
 
     /**
@@ -97,8 +81,58 @@ public class ElevensBoard extends Board {
      */
     @Override
     public boolean anotherPlayIsPossible() {
-        List<Card> pointCards = new ArrayList();
-        List<Card> faceCards = new ArrayList();
+        List<Integer> pointCards = new ArrayList();
+        List<Integer> faceCards = new ArrayList();
+        List<Integer> indexList = cardIndexes();
+        List<Integer> selectedCards = new ArrayList();
+        for(Integer i : indexList){
+            Card c = cardAt(i);
+            if(c.rank().equals("king")
+            || c.rank().equals("queen")
+            || c.rank().equals("jack"))
+                faceCards.add(i);
+            else
+                pointCards.add(i);
+        }
+        for(Integer c1 : pointCards){
+            selectedCards.add(c1);
+            for(Integer c2 : pointCards){
+                selectedCards.add(c2);
+                if(isLegal(selectedCards))
+                    return true;
+                else{
+                    selectedCards.remove(c2);
+                }
+            }
+            selectedCards.remove(c1);
+        }
+        if(faceCardTest(faceCards))
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * Checks to see if all 3 ranks of face card are present in a list
+     * @param cardList a list of cards
+     * @return true if a king, queen, and jack are present, false otherwise
+     */
+    public boolean faceCardTest(List<Integer> cardList){
+        boolean king = false,
+        queen = false,
+        jack = false;
+        for(Integer i : cardList){
+            if(cardAt(i).rank().equals("king"))
+                king = true;
+            else if(cardAt(i).rank().equals("queen"))
+                queen = true;
+            else if(cardAt(i).rank().equals("jack"))
+                jack = true;
+        }
+        if(king && queen && jack)
+            return true;
+        else
+            return false;
     }
 
     /**
@@ -111,6 +145,7 @@ public class ElevensBoard extends Board {
      */
     private boolean containsPairSum11(List<Integer> selectedCards) {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+        return true;
     }
 
     /**
@@ -123,5 +158,6 @@ public class ElevensBoard extends Board {
      */
     private boolean containsJQK(List<Integer> selectedCards) {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+        return true;
     }
 }
