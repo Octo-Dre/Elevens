@@ -65,10 +65,8 @@ public class ElevensBoard extends Board {
             else
                 return false;
         }
-        else if(selectedCards.size() == 3 && faceCardTest(selectedCards)){
-            return true;
-        }
-        return false;
+        else 
+            return((selectedCards.size() == 3) && containsJQK(selectedCards));
     }
 
     /**
@@ -83,9 +81,7 @@ public class ElevensBoard extends Board {
     public boolean anotherPlayIsPossible() {
         List<Integer> pointCards = new ArrayList();
         List<Integer> faceCards = new ArrayList();
-        List<Integer> indexList = cardIndexes();
-        List<Integer> selectedCards = new ArrayList();
-        for(Integer i : indexList){
+        for(Integer i : cardIndexes()){
             Card c = cardAt(i);
             if(c.rank().equals("king")
             || c.rank().equals("queen")
@@ -94,45 +90,10 @@ public class ElevensBoard extends Board {
             else
                 pointCards.add(i);
         }
-        for(Integer c1 : pointCards){
-            selectedCards.add(c1);
-            for(Integer c2 : pointCards){
-                selectedCards.add(c2);
-                if(isLegal(selectedCards))
-                    return true;
-                else{
-                    selectedCards.remove(c2);
-                }
-            }
-            selectedCards.remove(c1);
-        }
-        if(faceCardTest(faceCards))
+        if(containsPairSum11(pointCards))
             return true;
         else
-            return false;
-    }
-
-    /**
-     * Checks to see if all 3 ranks of face card are present in a list
-     * @param cardList a list of cards
-     * @return true if a king, queen, and jack are present, false otherwise
-     */
-    public boolean faceCardTest(List<Integer> cardList){
-        boolean king = false,
-        queen = false,
-        jack = false;
-        for(Integer i : cardList){
-            if(cardAt(i).rank().equals("king"))
-                king = true;
-            else if(cardAt(i).rank().equals("queen"))
-                queen = true;
-            else if(cardAt(i).rank().equals("jack"))
-                jack = true;
-        }
-        if(king && queen && jack)
-            return true;
-        else
-            return false;
+            return(containsJQK(faceCards));
     }
 
     /**
@@ -144,8 +105,14 @@ public class ElevensBoard extends Board {
      *              contain an 11-pair; false otherwise.
      */
     private boolean containsPairSum11(List<Integer> selectedCards) {
-        /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-        return true;
+        for(int i1 = 0; i1 < selectedCards.size(); i1++){
+            for(int i2 = 0; i2< selectedCards.size(); i2++){
+                if(cardAt(selectedCards.get(i1)).pointValue()
+                   + cardAt(selectedCards.get(i2)).pointValue() == 11)
+                   return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -157,7 +124,17 @@ public class ElevensBoard extends Board {
      *              include a jack, a queen, and a king; false otherwise.
      */
     private boolean containsJQK(List<Integer> selectedCards) {
-        /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-        return true;
+        boolean king = false,
+        queen = false,
+        jack = false;
+        for(Integer i : selectedCards){
+            if(cardAt(i).rank().equals("king"))
+                king = true;
+            else if(cardAt(i).rank().equals("queen"))
+                queen = true;
+            else if(cardAt(i).rank().equals("jack"))
+                jack = true;
+        }
+        return(king && queen && jack);
     }
 }
