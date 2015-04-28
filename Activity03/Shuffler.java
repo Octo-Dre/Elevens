@@ -9,7 +9,7 @@ public class Shuffler {
      * The number of consecutive shuffle steps to be performed in each call
      * to each sorting procedure.
      */
-    private static final int SHUFFLE_COUNT = 1;
+    private static final int SHUFFLE_COUNT = 9;
 
     /**
      * The number of values to shuffle.
@@ -22,13 +22,13 @@ public class Shuffler {
      */
     public static void main(String[] args) {
         System.out.println("Results of " + SHUFFLE_COUNT +
-                                 " consecutive perfect shuffles:");
-        int[] values1 = new int[VALUE_COUNT];
+                                             " consecutive perfect shuffles:");
+            int[] values1 = new int[VALUE_COUNT];
         int[] shuffled1 = new int[VALUE_COUNT];
         for (int i = 0; i < values1.length; i++) {
             values1[i] = i;
-            }
-        for (int j = 1; j <= SHUFFLE_COUNT; j++) {
+                        }
+            for (int j = 1; j <= SHUFFLE_COUNT; j++) {
             shuffled1 =  perfectShuffle(values1);
             System.out.print("  " + j + ":");
             for (int k = 0; k < values1.length; k++) {
@@ -39,13 +39,13 @@ public class Shuffler {
         System.out.println();
 
         System.out.println("Results of " + SHUFFLE_COUNT +
-                                 " consecutive efficient selection shuffles:");
-        int[] values2 = new int[VALUE_COUNT];
+                                             " consecutive efficient selection shuffles:");
+            int[] values2 = new int[VALUE_COUNT];
         int[] shuffled2 = new int[VALUE_COUNT];
         for (int i = 0; i < values2.length; i++) {
             values2[i] = i;
-            }
-        for (int j = 1; j <= SHUFFLE_COUNT; j++) {
+                        }
+            for (int j = 1; j <= SHUFFLE_COUNT; j++) {
             shuffled2 = selectionShuffle(values2);
             System.out.print("  " + j + ":");
             for (int k = 0; k < values2.length; k++) {
@@ -55,7 +55,6 @@ public class Shuffler {
         }
         System.out.println();
     }
-
 
     /**
      * Apply a "perfect shuffle" to the argument.
@@ -96,13 +95,18 @@ public class Shuffler {
      */
     public static int[] selectionShuffle(int[] values) {
         int[] shuffled = new int[values.length];
-        int j = (int)((values.length) * Math.random());
-        for(int k = 0; k < values.length - 1; k++){
-            while(values[j] == 0){
-                j = (int)((values.length) * Math.random());
+        int[] values2 = new int[values.length];
+        for(int i = 0; i < values.length; i++){
+            values2[i] = values[i];
+        }
+        int j = (int)((values2.length) * Math.random());
+        for(int k = 0; k < values2.length - 1; k++){
+            while(values2[j] == -1){
+                j = (int)((values2.length) * Math.random());
             }
-            shuffled[k] = values[j];
-            values[j] = 0;
+            int retValue = values2[j];
+            shuffled[k] = values2[j];
+            values2[j] = -1;
         }
         return shuffled;
     }
