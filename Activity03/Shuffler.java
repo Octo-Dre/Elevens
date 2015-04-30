@@ -100,11 +100,10 @@ public class Shuffler {
             values2[i] = values[i];
         }
         int j = (int)((values2.length) * Math.random());
-        for(int k = 0; k < values2.length - 1; k++){
+        for(int k = 0; k < values2.length; k++){
             while(values2[j] == -1){
                 j = (int)((values2.length) * Math.random());
             }
-            int retValue = values2[j];
             shuffled[k] = values2[j];
             values2[j] = -1;
         }
